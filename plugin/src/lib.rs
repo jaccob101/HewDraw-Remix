@@ -109,6 +109,7 @@ std::arch::global_asm!(
     .space 0xD0
     "#
 );
+
 #[no_mangle]
 pub extern "C" fn main() {
     #[cfg(feature = "main_nro")] {
