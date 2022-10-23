@@ -30,6 +30,7 @@
     <struct index="0">
       <float hash="start_spd_x_mul">0.8</float>
       <float hash="start_spd_y_mul">0.05</float>
+      <float hash="air_s2_speed_y">0.6</float>
     </struct>
     <hash40 index="1">dummy</hash40>
     <hash40 index="2">dummy</hash40>
@@ -38,7 +39,8 @@
   <list hash="param_special_hi">
     <struct index="0">
       <float hash="special_air_hi_start_x_mul">1</float>
-      <float hash="special_hi_dir_mul">11</float>
+      <float hash="special_air_hi_pass_mul">1.14</float>
+      <float hash="special_hi_dir_mul">12</float>
     </struct>
     <hash40 index="1">dummy</hash40>
     <hash40 index="2">dummy</hash40>
