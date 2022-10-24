@@ -1972,7 +1972,7 @@
     <struct index="58">
       <float hash="walk_speed_max">1.205</float>
       <float hash="ground_brake">0.075</float>
-      <float hash="dash_speed">1.7</float>
+      <float hash="dash_speed">1.68</float>
       <float hash="run_accel_mul">0.06</float>
       <float hash="run_accel_add">0.03</float>
       <float hash="run_speed_max">1.875</float>
@@ -1984,9 +1984,9 @@
       <float hash="jump_y">36.5</float>
       <float hash="mini_jump_y">13</float>
       <float hash="jump_aerial_y">33.5</float>
-      <float hash="air_accel_x_mul">0.0475</float>
+      <float hash="air_accel_x_mul">0.045</float>
       <float hash="air_accel_x_add">0.015</float>
-      <float hash="air_speed_x_stable">1.01</float>
+      <float hash="air_speed_x_stable">1</float>
       <float hash="air_brake_x">0.0105</float>
       <float hash="air_accel_y">0.114</float>
       <float hash="air_speed_y_stable">2.375</float>
