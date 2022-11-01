@@ -32,4 +32,5 @@
     <float hash="ucf_escape_stick_y">-0.7957</float>
     <float hash="ucf_pass_stick_y">-0.653</float>
     <float hash="moonwalk_disable_dashback_stick_y">-0.5</float>
+    <float hash="wavedash_speed_mul">0.8945</float>
 </struct>
