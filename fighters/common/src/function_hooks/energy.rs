@@ -388,8 +388,9 @@ unsafe fn update(energy: &mut FighterKineticEnergyControl, boma: &mut BattleObje
                 WorkModule::unable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_TURN_DASH);
             }
             if WorkModule::is_enable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_TURN_DASH)
+            && (ControlModule::get_trigger(boma) == 0 || Buttons::from_bits_unchecked(ControlModule::get_trigger(boma)) == Buttons::CStickOverride)
             && dashback_input {
-                energy.speed.x *= 0.25;
+                energy.speed.x *= WorkModule::get_param_float(boma, hash40("common"), hash40("dash_end_speed_mul"));
                 break 0.0;
             }
             // Shield Stop
@@ -427,7 +428,7 @@ unsafe fn update(energy: &mut FighterKineticEnergyControl, boma: &mut BattleObje
                     // Boost run
                     do_standard_accel = false;
                     energy.accel.x = mul - (brake * mul.signum());
-                    energy.speed_max.x = 999.0;
+                    energy.speed_max.x = -1.0;
                     0.0
                 } else {
                     mul
@@ -646,7 +647,7 @@ unsafe fn initialize(energy: &mut FighterKineticEnergyControl, boma: &mut Battle
         },
         Turn | TurnNoStop => {
             energy.speed_max = PaddedVec2::new(
-                WorkModule::get_param_float(boma, smash::hash40("walk_speed_max"), 0),
+                WorkModule::get_param_float(boma, smash::hash40("run_speed_max"), 0),
                 -1.0
             );
             energy.speed_limit = PaddedVec2::new(
@@ -789,10 +790,18 @@ unsafe fn setup(energy: &mut FighterKineticEnergyControl, reset_type: EnergyCont
             } else {
                 energy.lr * WorkModule::get_param_float(boma, smash::hash40("dash_speed"), 0)
             };
-            energy.speed.x = if 0.0 <= energy.speed.x * energy.lr {
-                dash_speed
+            energy.speed.x = if energy.speed.x * energy.lr >= 0.0 {
+                if reset_type == DashBack {
+                    dash_speed + energy.speed.x
+                } else {
+                    dash_speed
+                }
             } else {
-                dash_speed + energy.speed.x
+                if reset_type == DashBack {
+                    dash_speed
+                } else {
+                    dash_speed + energy.speed.x
+                }
             };
         },
         ShootDash => {
