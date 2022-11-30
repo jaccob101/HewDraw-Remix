@@ -478,6 +478,9 @@ pub trait BomaExt {
     unsafe fn check_airdodge_cancel(&mut self) -> bool;
     // Checks for status and enables transition to dash
     unsafe fn check_dash_cancel(&mut self) -> bool;
+
+    /// check for hitfall (should be called once per frame)
+    unsafe fn check_hitfall(&mut self);
 }
 
 impl BomaExt for BattleObjectModuleAccessor {
@@ -928,6 +931,39 @@ impl BomaExt for BattleObjectModuleAccessor {
         let ground_data = *((ground_module + 0x28) as *mut *mut f32);
         *ground_data.add(0x520 / 4) = x;
         *ground_data.add(0x524 / 4) = y;
+    }
+
+    /// checks whether you should hitfall (call this once per frame)
+    unsafe fn check_hitfall(&mut self) {
+        if self.is_situation(*SITUATION_KIND_AIR)
+        && self.is_status(*FIGHTER_STATUS_KIND_ATTACK_AIR)
+        {
+            /* this is written this way because stick_y_flick wont update during
+                hitlag, which means we need a flag to allow you to hitfall 1 frame
+                after the end of hitlag as well, and we need to check previous 
+                stick y directly to detect hitfall. That way, with the 5 frame buffer,
+                if you input a fastfall during hitlag, it will get registered after
+                the hitlag is over. Without the HITFALL_BUFFER flag, you have to
+                input the fastfall BEFORE you hit the move, only.
+            */
+            if !AttackModule::is_infliction_status(self, *COLLISION_KIND_MASK_HIT | *COLLISION_KIND_MASK_SHIELD)
+            || AttackModule::is_infliction(self, *COLLISION_KIND_MASK_HIT | *COLLISION_KIND_MASK_SHIELD)
+            {
+               crate::VarModule::set_int(self.object(), crate::consts::vars::common::instance::HITFALL_BUFFER, 0);
+            }
+
+            if AttackModule::is_infliction_status(self, *COLLISION_KIND_MASK_HIT | *COLLISION_KIND_MASK_SHIELD) {
+               crate::VarModule::inc_int(self.object(), crate::consts::vars::common::instance::HITFALL_BUFFER);
+            }
+
+            let buffer =crate::VarModule::get_int(self.object(), crate::consts::vars::common::instance::HITFALL_BUFFER);
+
+            if self.is_cat_flag(Cat2::FallJump)
+            && 0 < buffer && buffer <= 5 
+            {
+                WorkModule::on_flag(self, *FIGHTER_STATUS_WORK_ID_FLAG_RESERVE_DIVE);
+            }
+        }
     }
 }
 
