@@ -4,7 +4,7 @@
   <int hash="precede_extension">0</int>
   <float hash="ground_speed_limit">4</float>
   <float hash="turn_stick_x">-0.2</float>
-  <float hash="dash_stick_x">0.8</float>
+  <float hash="dash_stick_x">0.716</float>
   <float hash="dash_s4_frame">4</float>
   <float hash="dash_s4_frame_easy">6</float>
   <float hash="dash_s4_frame_hard">2</float>  
@@ -46,9 +46,9 @@
   <float hash="0x20d241cd64">0.85</float>
   <int hash="guard_damage_just_shield_disable_frame">1</int>
   <int hash="escape_flick_y">3</int>
-  <float hash="escape_stick_y">-0.75</float>
+  <float hash="escape_stick_y">-0.7386</float>
   <int hash="escape_fb_flick_x">3</int>
-  <float hash="escape_fb_stick_x">0.75</float>
+  <float hash="escape_fb_stick_x">0.7386</float>
   <float hash="escape_air_slide_landing_speed_max">4</float>
   <int hash="hit_stop_delay_flick">2</int>
   <float hash="hit_stop_delay_flick_mul">5</float>
@@ -99,7 +99,7 @@
   <int hash="air_lasso_landing_frame">25</int>
   <float hash="stand_stick_y">0.2</float>
   <float hash="stand_fb_stick_x">0.2</float>
-  <float hash="pass_stick_y">-0.71</float>
+  <float hash="pass_stick_y">-0.6929</float>
   <int hash="passive_trigger_frame">20</int>
   <int hash="no_rapid_frame_value">40</int>
   <float hash="invalid_passive_speed">999</float>
