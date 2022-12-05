@@ -12,6 +12,9 @@ mod controls;
 #[cfg(feature = "main_nro")]
 mod lua;
 
+#[cfg(feature = "main_nro")]
+mod online;
+
 use skyline::libc::c_char;
 #[cfg(feature = "main_nro")]
 use skyline_web::*;
@@ -175,6 +178,7 @@ unsafe fn setup_hid_hdr(handle: u32) {
 
 }
 
+
 #[no_mangle]
 pub extern "C" fn main() {
     #[cfg(feature = "main_nro")] {
@@ -195,6 +199,7 @@ pub extern "C" fn main() {
                 }
             }
         }
+        online::install();
     }
 
     #[cfg(not(feature = "runtime"))]
