@@ -328,6 +328,7 @@ unsafe fn update(energy: &mut FighterKineticEnergyControl, boma: &mut BattleObje
             }
         },
         Turn => {
+            stick.x = 0.0;
             // Perfect Pivot
             if VarModule::is_flag(boma.object(), vars::common::instance::IS_SMASH_TURN)
             && VarModule::is_flag(boma.object(), vars::common::instance::CAN_PERFECT_PIVOT)
@@ -388,9 +389,8 @@ unsafe fn update(energy: &mut FighterKineticEnergyControl, boma: &mut BattleObje
                 WorkModule::unable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_TURN_DASH);
             }
             if WorkModule::is_enable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_TURN_DASH)
-            && (ControlModule::get_trigger(boma) == 0 || Buttons::from_bits_unchecked(ControlModule::get_trigger(boma)) == Buttons::CStickOverride)
             && dashback_input {
-                energy.speed.x *= WorkModule::get_param_float(boma, hash40("common"), hash40("dash_end_speed_mul"));
+                energy.speed.x *= ParamModule::get_float(boma.object(), ParamType::Common, "dash_end_speed_mul");
                 break 0.0;
             }
             // Shield Stop

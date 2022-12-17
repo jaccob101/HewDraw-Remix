@@ -64,6 +64,8 @@ unsafe fn groundcollision__processgroundcollisioninfo(groundcollisioninfo: *mut 
     call_original!(groundcollisioninfo, groundcollision)
 }
 
+pub static mut RESET_AIRTIME: bool = false;
+
 // Performs ground correct/sets situation kind
 #[skyline::hook(offset = 0x53fe30)]
 unsafe fn groundcollision__processgroundcollisioninfo_check_landing(groundcollisioninfo: *mut f32, groundcollision: u64) {
@@ -75,15 +77,25 @@ unsafe fn groundcollision__processgroundcollisioninfo_check_landing(groundcollis
     
     let flags = *(groundcollisioninfo.add(0x5d8 / 4) as *mut u32);
     let is_fighter = flags >> 0x1b & 1 == 0;
+    let is_item = flags >> 0xa & 1 == 0;
     let situation_kind = *(groundcollisioninfo.add(0x5a0 / 4) as *mut i32);  // 1 = ground, 2 = air, 3 = cliff...
+    let prev_pos_y = *groundcollisioninfo.add(0x4c4 / 4);
     let pos_y = *groundcollisioninfo.add(0x634 / 4);
     let prev_ecb_offset_y = *groundcollisioninfo.add(0x424 / 4);
     let ecb_offset_y = *groundcollisioninfo.add(0x3d4 / 4);
 
     if !is_fighter
+    && !is_item
     && situation_kind == 2
-    && (prev_ecb_offset_y == 0.0 && ecb_offset_y != 0.0)  // this only passes on the spawn frame of a projectile
-    && pos_y < touch_pos_y  // checks if the projectile's position is underneath the surface it is touching
+    && (prev_ecb_offset_y == 0.0 && ecb_offset_y != 0.0) {
+        println!("{}", flags);
+    }
+    if !is_fighter
+    && !is_item
+    && situation_kind == 2
+    && (prev_ecb_offset_y == 0.0 && ecb_offset_y != 0.0)  // this only passes on the frame a projectile spawns
+    && (prev_pos_y + ecb_offset_y) <= touch_pos_y  // checks if the projectile's ECB bottom position on the previous frame was underneath the nearest surface
+    && (pos_y + ecb_offset_y) <= touch_pos_y  // checks if the projectile's ECB bottom position is underneath the nearest surface
     {
         *groundcollisioninfo.add(0x420 / 4) = *groundcollisioninfo.add(0x3d0 / 4);  // prev_ecb_offset_x = ecb_offset_x
         *groundcollisioninfo.add(0x424 / 4) = *groundcollisioninfo.add(0x3d4 / 4);  // prev_ecb_offset_y = ecb_offset_y
@@ -107,6 +119,7 @@ unsafe fn groundcollision__processgroundcollisioninfo_check_landing(groundcollis
         *groundcollisioninfo.add(0x634 / 4) = touch_pos_y;
         // Reset ECB offset to 0.0
         *groundcollisioninfo.add(0x3d4 / 4) = 0.0;
+        RESET_AIRTIME = true;
     }
 }
 // Sets GroundCollisionLine

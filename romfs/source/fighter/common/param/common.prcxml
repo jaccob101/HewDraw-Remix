@@ -12,7 +12,7 @@
   <float hash="dash_escape_frame">1</float>
   <int hash="turn_dash_frame">-1</int>
   <int hash="re_dash_frame">17</int>
-  <float hash="dash_end_speed_mul">0.225</float>
+  <float hash="dash_end_speed_mul">1</float>
   <float hash="run_stick_x">0.59</float>
   <float hash="turn_run_stick_x">-0.3178</float>
   <float hash="run_motion_rate_max">4</float>
@@ -54,7 +54,7 @@
   <float hash="hit_stop_delay_flick_mul">5</float>
   <int hash="hit_stop_delay_flick_frame">2</int>
   <int hash="hit_stop_delay_flick_max_count">50</int>
-  <float hash="hit_stop_delay_auto_mul">1.7</float>
+  <float hash="hit_stop_delay_auto_mul">2.5</float>
   <float hash="damage_reaction_mul_max">1</float>
   <list hash="pattern_power_mul">
     <hash40 index="0">dummy</hash40>
