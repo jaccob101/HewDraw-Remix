@@ -53,7 +53,7 @@ download_and_extract("skyline-dev", "skyline", "beta", "skyline.zip", "/atmosphe
 download_and_extract("HDR-Development", "exlaunch", "latest", "HID-HDR.zip")
 
 print("getting libnro_hook.nro")
-urllib.request.urlretrieve("https://github.com/ultimate-research/nro-hook-plugin/releases/download/beta/libnro_hook.nro", "libnro_hook.nro")
+urllib.request.urlretrieve("https://github.com/ultimate-research/nro-hook-plugin/releases/latest/download/libnro_hook.nro", "libnro_hook.nro")
 shutil.move("libnro_hook.nro", "switch-package/atmosphere/contents/01006A800016E000/romfs/skyline/plugins/")
 
 print("getting libsmashline_hook.nro")
