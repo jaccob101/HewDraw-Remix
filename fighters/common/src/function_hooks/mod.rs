@@ -22,6 +22,128 @@ pub mod collision;
 pub mod camera;
 
 
+#[skyline::hook(offset = 0x3a82b0, inline)]
+unsafe fn battleobject__call_update_movement(ctx: &skyline::hooks::InlineCtx) {
+    let boma = *ctx.registers[23].x.as_ref() as *mut BattleObjectModuleAccessor;
+
+    let stop_module = *(boma as *mut BattleObjectModuleAccessor as *mut u64).add(0x90 / 8) as *const u64;
+    let vtable = *(stop_module as *const *const u64);
+    let stop_module__is_stop: extern "C" fn(*const u64) -> bool = std::mem::transmute(*(((vtable as u64) + 0x88) as *const u64));
+    let is_stop = stop_module__is_stop(stop_module);
+    
+    let slow_module = *(boma as *mut BattleObjectModuleAccessor as *mut u64).add(0x170 / 8) as *const u64;
+    let vtable = *(slow_module as *const *const u64);
+    let slow_module__is_skip: extern "C" fn(*const u64) -> bool = std::mem::transmute(*(((vtable as u64) + 0xb0) as *const u64));
+    let is_skip = slow_module__is_skip(slow_module);
+
+    let status_module = *(boma as *mut BattleObjectModuleAccessor as *mut u64).add(0x40 / 8) as *const u64;
+    let vtable = *(status_module as *const *const u64);
+    let status_module__run_lua_status: extern "C" fn(*const u64) = std::mem::transmute(*(((vtable as u64) + 0x68) as *const u64));
+    status_module__run_lua_status(status_module);
+
+    let something_module = *(boma as *mut BattleObjectModuleAccessor as *mut u64).add(0xe8 / 8) as *const u64;
+    let vtable = *(something_module as *const *const u64);
+    let something_module__idk: extern "C" fn(*const u64, u64, u64) = std::mem::transmute(*(((vtable as u64) + 0x48) as *const u64));
+    something_module__idk(something_module, is_stop as u64, is_skip as u64);
+
+    let effect_module = *(boma as *mut BattleObjectModuleAccessor as *mut u64).add(0x140 / 8) as *const u64;
+    let vtable = *(effect_module as *const *const u64);
+    let effect_module__idk: extern "C" fn(*const u64, u64) = std::mem::transmute(*(((vtable as u64) + 0x58) as *const u64));
+    effect_module__idk(effect_module, 1);
+}
+
+#[skyline::hook(offset = 0x3a8168, inline)]
+unsafe fn battleobject__call_update_movement_stop(ctx: &skyline::hooks::InlineCtx) {
+    let boma = *ctx.registers[23].x.as_ref() as *mut BattleObjectModuleAccessor;
+
+    let stop_module = *(boma as *mut BattleObjectModuleAccessor as *mut u64).add(0x90 / 8) as *const u64;
+    let vtable = *(stop_module as *const *const u64);
+    let stop_module__is_stop: extern "C" fn(*const u64) -> bool = std::mem::transmute(*(((vtable as u64) + 0x88) as *const u64));
+    let is_stop = stop_module__is_stop(stop_module);
+    
+    let slow_module = *(boma as *mut BattleObjectModuleAccessor as *mut u64).add(0x170 / 8) as *const u64;
+    let vtable = *(slow_module as *const *const u64);
+    let slow_module__is_skip: extern "C" fn(*const u64) -> bool = std::mem::transmute(*(((vtable as u64) + 0xb0) as *const u64));
+    let is_skip = slow_module__is_skip(slow_module);
+
+    let status_module = *(boma as *mut BattleObjectModuleAccessor as *mut u64).add(0x40 / 8) as *const u64;
+    let vtable = *(status_module as *const *const u64);
+    let status_module__run_lua_status: extern "C" fn(*const u64) = std::mem::transmute(*(((vtable as u64) + 0x68) as *const u64));
+    status_module__run_lua_status(status_module);
+
+    let something_module = *(boma as *mut BattleObjectModuleAccessor as *mut u64).add(0xe8 / 8) as *const u64;
+    let vtable = *(something_module as *const *const u64);
+    let something_module__idk: extern "C" fn(*const u64, u64, u64) = std::mem::transmute(*(((vtable as u64) + 0x48) as *const u64));
+    something_module__idk(something_module, is_stop as u64, is_skip as u64);
+
+    let effect_module = *(boma as *mut BattleObjectModuleAccessor as *mut u64).add(0x140 / 8) as *const u64;
+    let vtable = *(effect_module as *const *const u64);
+    let effect_module__idk: extern "C" fn(*const u64, u64) = std::mem::transmute(*(((vtable as u64) + 0x58) as *const u64));
+    effect_module__idk(effect_module, 1);
+}
+
+#[skyline::hook(offset = 0x3a85b4, inline)]
+unsafe fn run_lua_status_hook(ctx: &skyline::hooks::InlineCtx) {
+    let boma = *ctx.registers[22].x.as_ref() as *mut BattleObjectModuleAccessor;
+
+    if GroundModule::get_correct(boma) == *GROUND_CORRECT_KIND_NONE
+    || ![*SITUATION_KIND_GROUND, *SITUATION_KIND_AIR].contains(&StatusModule::situation_kind(boma))
+    {
+        return;
+    }
+
+    if (*boma).is_fighter()
+    && StatusModule::prev_situation_kind(boma) == *SITUATION_KIND_AIR
+    && StatusModule::situation_kind(boma) == *SITUATION_KIND_GROUND
+    {
+        WorkModule::set_int(boma, 0, *FIGHTER_INSTANCE_WORK_ID_INT_FRAME_IN_AIR);
+    }
+
+    let ground_module = *(boma as *mut BattleObjectModuleAccessor as *const u64).add(0x58 / 8);
+    let ground_collision_info = *((ground_module + 0x28) as *mut *mut f32);
+
+    let prev_collision_line_up = ((ground_collision_info as u64) + 0x190) as *mut GroundCollisionLine;
+    let prev_collision_line_left = ((ground_collision_info as u64) + 0x1c0) as *mut GroundCollisionLine;
+    let prev_collision_line_right = ((ground_collision_info as u64) + 0x1f0) as *mut GroundCollisionLine;
+    let prev_collision_line_down = ((ground_collision_info as u64) + 0x220) as *mut GroundCollisionLine;
+    
+    let collision_line_up = ((ground_collision_info as u64) + 0x10) as *mut GroundCollisionLine;
+    let collision_line_left = ((ground_collision_info as u64) + 0x40) as *mut GroundCollisionLine;
+    let collision_line_right = ((ground_collision_info as u64) + 0x70) as *mut GroundCollisionLine;
+    let collision_line_down = ((ground_collision_info as u64) + 0xa0) as *mut GroundCollisionLine;
+
+    if *(prev_collision_line_up as *mut u64) == 0 && *(collision_line_up as *mut u64) != 0
+    || *(prev_collision_line_left as *mut u64) == 0 && *(collision_line_left as *mut u64) != 0
+    || *(prev_collision_line_right as *mut u64) == 0 && *(collision_line_right as *mut u64) != 0
+    || *(prev_collision_line_down as *mut u64) == 0 && *(collision_line_down as *mut u64) != 0 {
+        let stop_module = *(boma as *mut BattleObjectModuleAccessor as *mut u64).add(0x90 / 8) as *const u64;
+        let vtable = *(stop_module as *const *const u64);
+        let stop_module__is_stop: extern "C" fn(*const u64) -> bool = std::mem::transmute(*(((vtable as u64) + 0x88) as *const u64));
+        let is_stop = stop_module__is_stop(stop_module);
+        
+        let slow_module = *(boma as *mut BattleObjectModuleAccessor as *mut u64).add(0x170 / 8) as *const u64;
+        let vtable = *(slow_module as *const *const u64);
+        let slow_module__is_skip: extern "C" fn(*const u64) -> bool = std::mem::transmute(*(((vtable as u64) + 0xb0) as *const u64));
+        let is_skip = slow_module__is_skip(slow_module);
+
+        let status_module = *(boma as *mut BattleObjectModuleAccessor as *mut u64).add(0x40 / 8) as *const u64;
+        let vtable = *(status_module as *const *const u64);
+        let status_module__run_lua_status: extern "C" fn(*const u64) = std::mem::transmute(*(((vtable as u64) + 0x68) as *const u64));
+        status_module__run_lua_status(status_module);
+
+        let something_module = *(boma as *mut BattleObjectModuleAccessor as *mut u64).add(0xe8 / 8) as *const u64;
+        let vtable = *(something_module as *const *const u64);
+        let something_module__idk: extern "C" fn(*const u64, u64, u64) = std::mem::transmute(*(((vtable as u64) + 0x48) as *const u64));
+        something_module__idk(something_module, is_stop as u64, is_skip as u64);
+    
+        let effect_module = *(boma as *mut BattleObjectModuleAccessor as *mut u64).add(0x140 / 8) as *const u64;
+        let vtable = *(effect_module as *const *const u64);
+        let effect_module__idk: extern "C" fn(*const u64, u64) = std::mem::transmute(*(((vtable as u64) + 0x58) as *const u64));
+        effect_module__idk(effect_module, 1);
+    }
+}
+
+
 pub fn install() {
     energy::install();
     effect::install();
@@ -54,5 +176,27 @@ pub fn install() {
 
         // removes phantoms
         skyline::patching::Patch::in_text(0x3e6ce8).data(0x14000012u32);
+
+        // Stubs StatusModule::RunLuaStatus call
+        skyline::patching::Patch::in_text(0x3a85b8).nop();
+        skyline::patching::Patch::in_text(0x3a85bc).nop();
+        skyline::patching::Patch::in_text(0x3a85c0).nop();
+        skyline::patching::Patch::in_text(0x3a85c4).nop();
+        skyline::patching::Patch::in_text(0x3a85c8).nop();
+        skyline::patching::Patch::in_text(0x3a85cc).nop();
+        skyline::patching::Patch::in_text(0x3a85d0).nop();
+        skyline::patching::Patch::in_text(0x3a85d4).nop();
+        skyline::patching::Patch::in_text(0x3a85d8).nop();
+        skyline::patching::Patch::in_text(0x3a85dc).nop();
+        skyline::patching::Patch::in_text(0x3a85e0).nop();
+        skyline::patching::Patch::in_text(0x3a85e4).nop();
+        skyline::patching::Patch::in_text(0x3a85e8).nop();
+        skyline::patching::Patch::in_text(0x3a85ec).nop();
+        skyline::patching::Patch::in_text(0x3a85f0).nop();
     }
+    skyline::install_hooks!(
+        battleobject__call_update_movement,
+        battleobject__call_update_movement_stop,
+        run_lua_status_hook
+    );
 }
