@@ -85,12 +85,6 @@ unsafe fn groundcollision__processgroundcollisioninfo_check_landing(groundcollis
     if !is_fighter
     && !is_item
     && situation_kind == 2
-    && (prev_ecb_offset_y == 0.0 && ecb_offset_y != 0.0) {
-        println!("{}", flags);
-    }
-    if !is_fighter
-    && !is_item
-    && situation_kind == 2
     && (prev_ecb_offset_y == 0.0 && ecb_offset_y != 0.0)  // this only passes on the frame a projectile spawns
     && (prev_pos_y + ecb_offset_y) <= touch_pos_y  // checks if the projectile's ECB bottom position on the previous frame was underneath the nearest surface
     && (pos_y + ecb_offset_y) <= touch_pos_y  // checks if the projectile's ECB bottom position is underneath the nearest surface
