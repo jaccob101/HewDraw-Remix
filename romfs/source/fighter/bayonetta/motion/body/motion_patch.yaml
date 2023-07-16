@@ -1,3 +1,11 @@
+fall:
+  blend_frames: 5
+fall_aerial:
+  blend_frames: 5
+fall_special:
+  blend_frames: 5
+guard_off:
+  blend_frames: 4
 throw_b:
   extra:
     cancel_frame: 47
@@ -32,17 +40,10 @@ special_hi:
 attack_hi4:
   flags:
     move: false
-appeal_s_l:
-  extra:
-    cancel_frame: 31
-appeal_s_r:
-  extra:
-    cancel_frame: 31
 attack_lw4:
   flags:
     move: false
 special_lw:
-  blend_frames: 3
   extra:
     intangible_end_frame: 15
     cancel_frame: 66
@@ -52,7 +53,7 @@ attack_hi3:
   extra:
     cancel_frame: 25
 appeal_lw_r:
-  blend_frames: 5
+  blend_frames: 10
   animations:
   - name: j02win1.nuanmb
   scripts:
@@ -61,17 +62,16 @@ appeal_lw_r:
   - effect_win1
 appeal_hi_l:
   extra:
-    cancel_frame: 24
+    cancel_frame: 26
 attack_s4_s:
   flags:
     move: false
 attack_s3_s:
-  blend_frames: 5
   extra:
     cancel_frame: 46
 appeal_hi_r:
   extra:
-    cancel_frame: 24
+    cancel_frame: 26
 appeal_lw_l:
   blend_frames: 10
   animations:
@@ -87,7 +87,7 @@ attack_air_f:
   extra:
     cancel_frame: 32
 attack_s3_s3:
-  blend_frames: 3
+  blend_frames: 5
   extra:
     cancel_frame: 47
 attack_s4_lw:
@@ -98,16 +98,17 @@ attack_s3_s2:
   extra:
     cancel_frame: 49
 attack_air_f2:
+  blend_frames: 2
   extra:
     cancel_frame: 37
 attack_air_f3:
+  blend_frames: 3
   extra:
     cancel_frame: 45
 attack_air_hi:
   extra:
     cancel_frame: 37
 special_air_lw:
-  blend_frames: 3
   extra:
     intangible_start_frame: 0
     intangible_end_frame: 0
@@ -119,13 +120,11 @@ special_air_hi:
   extra:
     cancel_frame: 45
 special_air_s_u:
-  blend_frames: 3
   extra:
-    cancel_frame: 42
+    cancel_frame: 43
 special_n_end_f:
   flags:
     move: true
-  blend_frames: 5
 special_n_end_h:
   flags:
     move: true
@@ -168,10 +167,9 @@ escape_f_batwithin:
 special_air_n_end_f:
   flags:
     move: true
-  blend_frames: 5
 special_air_s_d_hit:
   extra:
-    cancel_frame: 32
+    cancel_frame: 31
 special_air_n_end_h:
   flags:
     move: true
@@ -181,8 +179,6 @@ special_air_n_fire_f:
 escape_air_batwithin:
   extra:
     cancel_frame: 50
-special_lw_batwithin:
-  blend_frames: 3
 special_air_n_loop_h:
   flags:
     move: true
@@ -204,5 +200,3 @@ special_air_n_charge_f:
 special_air_n_charge_h:
   flags:
     move: true
-special_air_lw_batwithin:
-  blend_frames: 3
