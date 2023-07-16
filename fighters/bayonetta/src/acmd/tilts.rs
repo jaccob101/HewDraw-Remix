@@ -33,10 +33,6 @@ unsafe fn bayonetta_attack_s3_s_game(fighter: &mut L2CAgentBase) {
         WorkModule::on_flag(boma, *FIGHTER_BAYONETTA_INSTANCE_WORK_ID_FLAG_SHOOTING_CHECK_END);
         AttackModule::clear_all(boma);
     }
-    frame(lua_state, 28.0);
-    if is_excute(fighter) {
-        VarModule::on_flag(fighter.battle_object, vars::bayonetta::status::IS_ACTIVATE);
-    }
 }
 
 #[acmd_script( agent = "bayonetta", script = "game_attacks32" , category = ACMD_GAME , low_priority)]
