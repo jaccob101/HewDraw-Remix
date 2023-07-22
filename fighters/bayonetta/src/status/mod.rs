@@ -7,10 +7,7 @@ mod escape;
 /// ABK allow one dabk 2 abks
 unsafe extern "C" fn should_use_special_s_callback(fighter: &mut L2CFighterCommon) -> L2CValue {
     if fighter.is_situation(*SITUATION_KIND_AIR) 
-    && ((fighter.get_int(*FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_SPECIAL_AIR_S_USED_COUNT) == 2 && VarModule::get_int(fighter.battle_object, vars::bayonetta::instance::DABK_COUNT) == 0 )
-    || (fighter.get_int(*FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_SPECIAL_AIR_S_USED_COUNT) >= 1 && !VarModule::is_flag(fighter.battle_object, vars::bayonetta::instance::SPECIAL_HIT))
-    || fighter.get_int(*FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_SPECIAL_AIR_S_USED_COUNT) > 2
-    || VarModule::get_int(fighter.battle_object, vars::bayonetta::instance::DABK_COUNT) > 1)
+    && VarModule::is_flag(fighter.battle_object, vars::bayonetta::instance::ABK_UNABLE)
     {
         false.into()
     } else {
