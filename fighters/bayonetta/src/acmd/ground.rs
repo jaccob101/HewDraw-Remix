@@ -98,49 +98,33 @@ unsafe fn bayonetta_attack_100_game(fighter: &mut L2CAgentBase) {
     let lua_state = fighter.lua_state_agent;
     let boma = fighter.boma();
     frame(lua_state, 1.0);
-    if is_excute(fighter) {
-        notify_event_msc_cmd!(fighter, Hash40::new_raw(0x2d51fcdb09), *FIGHTER_BAYONETTA_SHOOTING_SLOT_R_ARM, true, true, true, 10, 0, 3, 0, false);
-        notify_event_msc_cmd!(fighter, Hash40::new_raw(0x2b7cb92b79), *FIGHTER_BAYONETTA_SHOOTING_SLOT_L_ARM, true, true, true, 10);
-    }
     for _ in 0..99 {
         wait(lua_state, 1.0);
         if is_excute(fighter) {
-        ATTACK(fighter, 0, 0, Hash40::new("top"), 0.5, 0, 25, 0, 15, 4.0, 0.0, 9.0, 2.5, Some(0.0), Some(9.0), Some(2.5), 0.6, 0.4, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 4, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
-        ATTACK(fighter, 1, 0, Hash40::new("top"), 0.5, 361, 15, 0, 5, 6.8, 0.0, 9.0, 13.0, Some(0.0), Some(9.0), Some(6.4), 0.6, 0.4, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 4, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
-        ATK_SET_SHIELD_SETOFF_MUL_arg3(fighter, 0, 1, 10.0);
-        AttackModule::set_add_reaction_frame(fighter.module_accessor, 0, 3.0, false);
-        WorkModule::on_flag(fighter.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_100_CONTINUE_CHECK);
-        sv_animcmd::wait_loop_clear(lua_state);
-        WorkModule::on_flag(fighter.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_100_CHECK_COMBO_NUM);
-    }
-    wait(lua_state, 4.0);
-        if is_excute(fighter) {
-            if ControlModule::check_button_off(boma, *CONTROL_PAD_BUTTON_ATTACK) {
-            MotionModule::change_motion(boma, Hash40::new("attack_100_end"), 0.0, 1.0, false, 0.0, false, false);
-            }
+            ATTACK(fighter, 0, 0, Hash40::new("top"), 0.5, 0, 25, 0, 15, 4.0, 0.0, 9.0, 2.5, Some(0.0), Some(9.0), Some(2.5), 0.6, 0.4, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 4, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
+            ATTACK(fighter, 1, 0, Hash40::new("top"), 0.5, 361, 15, 0, 5, 6.8, 0.0, 9.0, 13.0, Some(0.0), Some(9.0), Some(6.4), 0.6, 0.4, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 4, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
+            ATK_SET_SHIELD_SETOFF_MUL_arg3(fighter, 0, 1, 10.0);
+            AttackModule::set_add_reaction_frame(fighter.module_accessor, 0, 3.0, false);
+            WorkModule::on_flag(fighter.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_100_CONTINUE_CHECK);
+            sv_animcmd::wait_loop_clear(lua_state);
+            WorkModule::on_flag(fighter.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_100_CHECK_COMBO_NUM);
         }
+        wait(lua_state, 4.0);
+        if fighter.is_button_off(Buttons::AttackRaw) {MotionModule::change_motion(boma, Hash40::new("attack_100_end"), 0.0, 1.0, false, 0.0, false, false);}
     }
 }
 
-#[acmd_script( agent = "bayonetta", script = "effect_attack100", category = ACMD_EFFECT, low_priority )]
-unsafe fn effect_attack100(fighter: &mut L2CAgentBase) {
-    let a = WorkModule::get_int64(fighter.module_accessor, *FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_EFFECT_KIND_BAYONETTA_ATTACK_100A);
-    let b = WorkModule::get_int64(fighter.module_accessor, *FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_EFFECT_KIND_BAYONETTA_ATTACK_100B);
-    for _ in 0..99 {
-    sv_animcmd::wait_loop_sync_mot(fighter.lua_state_agent);
-    if is_excute(fighter) {
-        fighter.clear_lua_stack();
-        lua_args!(fighter, a, Hash40::new("trans"), 0, 10, 3, 0, 0, 0, 0.93, 0, 0, 2, 0, 0, 30, true);
-        sv_animcmd::EFFECT_WORK(fighter.lua_state_agent);
-    }
-    frame(fighter.lua_state_agent, 10.0);
-    if is_excute(fighter) {
-        fighter.clear_lua_stack();
-        lua_args!(fighter, b, Hash40::new("trans"), 0, 10, 3, 0, 0, 0, 0.93, 0, 0, 2, 0, 0, 30, true);
-        sv_animcmd::EFFECT_WORK(fighter.lua_state_agent);
-    }
-    }
-}
+//#[acmd_script( agent = "bayonetta", script = "effect_attack100", category = ACMD_EFFECT, low_priority )]
+//unsafe fn effect_attack100(fighter: &mut L2CAgentBase) {
+//    let lua_state = fighter.lua_state_agent;
+//    let boma: &mut BattleObjectModuleAccessor = fighter.boma();
+//    wait_loop_sync_mot();
+//    if is_excute(fighter) {
+//        EFFECT(fighter, Hash40::new("*FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_EFFECT_KIND_BAYONETTA_ATTACK_100A"), Hash40::new("trans"), 0, 10, 3, 0, 0, 0, 0.93, 0, 0, 2, 0, 0, 30, true);
+//    }
+//    frame(lua_state, 10.0);
+//    EFFECT(fighter, Hash40::new("*FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_EFFECT_KIND_BAYONETTA_ATTACK_100B"), Hash40::new("trans"), 0, 10, 3, 0, 0, 0, 0.93, 0, 0, 2, 0, 0, 30, true);
+//}
 
 #[acmd_script( agent = "bayonetta", script = "game_attack100end" , category = ACMD_GAME , low_priority)]
 unsafe fn bayonetta_attack_100_end_game(fighter: &mut L2CAgentBase) {
@@ -223,7 +207,7 @@ pub fn install() {
         bayonetta_attack_12_game,
         bayonetta_attack_13_game,
         bayonetta_attack_100_game,
-        effect_attack100,
+        //effect_attack100,
         bayonetta_attack_100_end_game,
         bayonetta_attack_dash_game,
     );

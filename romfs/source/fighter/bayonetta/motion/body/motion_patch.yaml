@@ -150,7 +150,7 @@ special_air_s_d:
   blend_frames: 2
 special_air_s_d_hit:
   extra:
-    cancel_frame: 31
+    cancel_frame: 30
 special_air_n_end_h:
   flags:
     move: true

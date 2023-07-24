@@ -14,7 +14,7 @@ unsafe fn aerial_cancels(fighter: &mut L2CFighterCommon, boma: &mut BattleObject
             is_input_cancel = true;
             new_status = *FIGHTER_STATUS_KIND_SPECIAL_N;
         } else if fighter.is_cat_flag(Cat1::SpecialS) {
-            if !VarModule::is_flag(fighter.battle_object, vars::bayonetta::instance::ABK_UNABLE) {
+            if !fighter.is_flag(*FIGHTER_BAYONETTA_INSTANCE_WORK_ID_FLAG_DISABLE_AIR_SPECIAL_S) && !VarModule::is_flag(fighter.battle_object, vars::common::instance::SIDE_SPECIAL_CANCEL) {
                 is_input_cancel = true;
                 new_status = *FIGHTER_STATUS_KIND_SPECIAL_S;
             }
@@ -24,7 +24,7 @@ unsafe fn aerial_cancels(fighter: &mut L2CFighterCommon, boma: &mut BattleObject
                 new_status = *FIGHTER_STATUS_KIND_SPECIAL_HI;
             }
         } 
-        if boma.status_frame() >= 20 { //universal 20f
+        if boma.status_frame() >= 15 { //universal 15f
             fighter.check_airdodge_cancel();
             boma.check_jump_cancel(false);
             if is_input_cancel {fighter.change_status_req(new_status, false); } //special cancel
@@ -59,7 +59,6 @@ unsafe fn nspecial_mechanics(fighter: &mut L2CFighterCommon, boma: &mut BattleOb
     if fighter.is_status(*FIGHTER_BAYONETTA_STATUS_KIND_SPECIAL_N_CHARGE) { //PM-like neutral-b canceling
         if fighter.is_situation(*SITUATION_KIND_AIR) {
             if fighter.is_cat_flag(Cat1::AirEscape)  {
-                ControlModule::reset_trigger(boma);
                 StatusModule::change_status_force(boma, *FIGHTER_STATUS_KIND_FALL, true);
                 ControlModule::clear_command_one(fighter.module_accessor, *FIGHTER_PAD_COMMAND_CATEGORY1, *FIGHTER_PAD_CMD_CAT1_AIR_ESCAPE);
             }//drift
@@ -81,11 +80,9 @@ unsafe fn reset_flags(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectMod
                                   *FIGHTER_STATUS_KIND_ENTRY]){
         VarModule::set_int(fighter.battle_object, vars::bayonetta::instance::NUM_RECOVERY_RESOURCE_USED, 0);
         VarModule::set_int(boma.object(), vars::bayonetta::instance::FAIR_STATE, 0);
-        VarModule::set_int(fighter.battle_object, vars::bayonetta::instance::DABK_COUNT, 0);
     }
     //resets flags if hit
     if StopModule::is_damage(boma) {
-        VarModule::set_int(fighter.battle_object, vars::bayonetta::instance::DABK_COUNT, 0);
         if VarModule::get_int(fighter.battle_object, vars::bayonetta::instance::NUM_RECOVERY_RESOURCE_USED) > 1 {
             VarModule::set_int(fighter.battle_object, vars::bayonetta::instance::NUM_RECOVERY_RESOURCE_USED, 1);
         }
@@ -105,22 +102,10 @@ unsafe fn resources(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectModul
         VarModule::off_flag(fighter.battle_object, vars::common::instance::SIDE_SPECIAL_CANCEL);
         VarModule::off_flag(fighter.battle_object, vars::common::instance::UP_SPECIAL_CANCEL);
     }
-    //special use or cancellability
-    //ticks if dABK bounces off an opponent
-    if StatusModule::is_changing(boma) && boma.is_status(*FIGHTER_BAYONETTA_STATUS_KIND_SPECIAL_AIR_S_D_HIT) {VarModule::inc_int(fighter.battle_object, vars::bayonetta::instance::DABK_COUNT);}
     //hit-flag
     if !VarModule::is_flag(fighter.battle_object, vars::bayonetta::instance::IS_HIT) && AttackModule::is_infliction(boma, *COLLISION_KIND_MASK_HIT) && VarModule::get_int(fighter.battle_object, vars::common::instance::LAST_ATTACK_HITBOX_ID) < 6 {
         VarModule::on_flag(fighter.battle_object, vars::bayonetta::instance::IS_HIT);
-        if boma.is_status_one_of(&[*FIGHTER_BAYONETTA_STATUS_KIND_SPECIAL_AIR_S_U, *FIGHTER_BAYONETTA_STATUS_KIND_SPECIAL_AIR_S_D]) {VarModule::on_flag(fighter.battle_object, vars::bayonetta::instance::SPECIAL_HIT);}
     }
-    //abk usability
-    if (fighter.get_int(*FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_SPECIAL_AIR_S_USED_COUNT) >= 1 && !VarModule::is_flag(fighter.battle_object, vars::bayonetta::instance::SPECIAL_HIT))
-    || (fighter.get_int(*FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_SPECIAL_AIR_S_USED_COUNT) == 2 && VarModule::get_int(fighter.battle_object, vars::bayonetta::instance::DABK_COUNT) == 0 )
-    || fighter.get_int(*FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_SPECIAL_AIR_S_USED_COUNT) > 2
-    || VarModule::get_int(fighter.battle_object, vars::bayonetta::instance::DABK_COUNT) > 1 
-    || VarModule::is_flag(fighter.battle_object, vars::common::instance::SIDE_SPECIAL_CANCEL) {
-        VarModule::on_flag(fighter.battle_object, vars::bayonetta::instance::ABK_UNABLE);
-    } else if VarModule::get_int(fighter.battle_object, vars::bayonetta::instance::NUM_RECOVERY_RESOURCE_USED) < 2 {VarModule::off_flag(fighter.battle_object, vars::bayonetta::instance::ABK_UNABLE); }
 }
 
 unsafe fn forward_air(fighter: &mut smash::lua2cpp::L2CFighterCommon, boma: &mut BattleObjectModuleAccessor) {
