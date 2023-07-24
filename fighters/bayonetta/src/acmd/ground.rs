@@ -27,7 +27,7 @@ unsafe fn bayonetta_attack_11_game(fighter: &mut L2CAgentBase) {
     if is_excute(fighter) {
         AttackModule::clear_all(boma);
     }
-    frame(lua_state, 17.0); 
+    frame(lua_state, 16.0); 
     if is_excute(fighter) {
         WorkModule::on_flag(boma, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO);
     } 
@@ -56,11 +56,11 @@ unsafe fn bayonetta_attack_12_game(fighter: &mut L2CAgentBase) {
     if is_excute(fighter) {
         AttackModule::clear_all(boma);
     }
-    wait(lua_state, 3.0);
+    wait(lua_state, 2.0);
     if is_excute(fighter) {
         WorkModule::on_flag(boma, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_100);
     }
-    frame(lua_state, 19.0);
+    frame(lua_state, 18.0);
     if is_excute(fighter) {
         WorkModule::on_flag(boma, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO);
         WorkModule::off_flag(boma, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_100);
@@ -113,18 +113,6 @@ unsafe fn bayonetta_attack_100_game(fighter: &mut L2CAgentBase) {
         if fighter.is_button_off(Buttons::AttackRaw) {MotionModule::change_motion(boma, Hash40::new("attack_100_end"), 0.0, 1.0, false, 0.0, false, false);}
     }
 }
-
-//#[acmd_script( agent = "bayonetta", script = "effect_attack100", category = ACMD_EFFECT, low_priority )]
-//unsafe fn effect_attack100(fighter: &mut L2CAgentBase) {
-//    let lua_state = fighter.lua_state_agent;
-//    let boma: &mut BattleObjectModuleAccessor = fighter.boma();
-//    wait_loop_sync_mot();
-//    if is_excute(fighter) {
-//        EFFECT(fighter, Hash40::new("*FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_EFFECT_KIND_BAYONETTA_ATTACK_100A"), Hash40::new("trans"), 0, 10, 3, 0, 0, 0, 0.93, 0, 0, 2, 0, 0, 30, true);
-//    }
-//    frame(lua_state, 10.0);
-//    EFFECT(fighter, Hash40::new("*FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_EFFECT_KIND_BAYONETTA_ATTACK_100B"), Hash40::new("trans"), 0, 10, 3, 0, 0, 0, 0.93, 0, 0, 2, 0, 0, 30, true);
-//}
 
 #[acmd_script( agent = "bayonetta", script = "game_attack100end" , category = ACMD_GAME , low_priority)]
 unsafe fn bayonetta_attack_100_end_game(fighter: &mut L2CAgentBase) {
@@ -207,7 +195,6 @@ pub fn install() {
         bayonetta_attack_12_game,
         bayonetta_attack_13_game,
         bayonetta_attack_100_game,
-        //effect_attack100,
         bayonetta_attack_100_end_game,
         bayonetta_attack_dash_game,
     );

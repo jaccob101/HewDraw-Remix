@@ -5,7 +5,7 @@ utils::import_noreturn!(common::opff::fighter_common_opff);
 
 unsafe fn aerial_cancels(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectModuleAccessor) {
     if fighter.is_status(*FIGHTER_STATUS_KIND_ATTACK_AIR)
-    && !fighter.is_motion_one_of(&[Hash40::new("attack_air_n_hold"), Hash40::new("attack_air_hi_hold"), Hash40::new("attack_air_lw"), Hash40::new("attack_air_lw_hold")])
+    && !fighter.is_motion_one_of(&[Hash40::new("attack_air_n_hold"), Hash40::new("attack_air_hi_hold"), Hash40::new("attack_air_lw_hold")])
     && VarModule::is_flag(fighter.battle_object, vars::bayonetta::instance::IS_HIT) 
     && !fighter.is_in_hitlag() {
         let mut new_status = 0;
@@ -26,10 +26,12 @@ unsafe fn aerial_cancels(fighter: &mut L2CFighterCommon, boma: &mut BattleObject
         } 
         if boma.status_frame() >= 15 { //universal 15f
             fighter.check_airdodge_cancel();
-            boma.check_jump_cancel(false);
             if is_input_cancel {fighter.change_status_req(new_status, false); } //special cancel
-            if boma.status_frame() >= 25 { CancelModule::enable_cancel(fighter.module_accessor);} //aerial cancel 25f
-        }//nair/uair/bair cancel
+            if !fighter.is_motion(Hash40::new("attack_air_lw")) {
+                boma.check_jump_cancel(false);
+                if boma.status_frame() >= 25 {CancelModule::enable_cancel(fighter.module_accessor); } //aerial cancel 25f
+            }
+        }
     }
 }
 
