@@ -193,6 +193,3 @@ special_air_n_charge_f:
 special_air_n_charge_h:
   flags:
     move: true
-catch_attack:
-  extra:
-    cancel_frame: 20
