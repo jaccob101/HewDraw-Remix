@@ -32,6 +32,8 @@ attack_11:
   extra:
     cancel_frame: 25
 attack_lw3:
+  flags:
+    move: false
   extra:
     cancel_frame: 32
 special_hi:
@@ -191,3 +193,6 @@ special_air_n_charge_f:
 special_air_n_charge_h:
   flags:
     move: true
+catch_attack:
+  extra:
+    cancel_frame: 20
