@@ -194,14 +194,14 @@ unsafe fn branching_ftilt_jab(fighter: &mut L2CFighterCommon) {
     if fighter.is_status(*FIGHTER_STATUS_KIND_ATTACK) && !fighter.is_cat_flag(Cat1::AttackLw3 | Cat1::AttackHi3 | Cat1::AttackS3 | Cat1::Catch) {
         //hold jab
         if (fighter.is_button_on(Buttons::Attack) && ControlModule::get_trigger_count(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK as u8) > 5) 
-        && fighter.is_flag(*FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO) 
+        && (fighter.is_flag(*FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO) || fighter.is_flag(*FIGHTER_STATUS_ATTACK_FLAG_ENABLE_100))
         && AttackModule::is_infliction_status(boma, *COLLISION_KIND_MASK_HIT | *COLLISION_KIND_MASK_SHIELD) {
             StatusModule::change_status_request(boma, *FIGHTER_STATUS_KIND_ATTACK, false);
         }
         if fighter.is_flag(*FIGHTER_STATUS_ATTACK_FLAG_ENABLE_100) { //rapid/jab3
             if fighter.is_cat_flag(Cat1::SpecialN) {
                 StatusModule::change_status_request(boma, *FIGHTER_STATUS_KIND_ATTACK, false);
-            } else if fighter.is_cat_flag(Cat1::AttackN) {
+            } else if fighter.is_cat_flag(Cat1::AttackN) && !fighter.is_flag(*FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO) {
                 StatusModule::change_status_request(boma, *FIGHTER_STATUS_KIND_ATTACK_100, false);
             }
         }
