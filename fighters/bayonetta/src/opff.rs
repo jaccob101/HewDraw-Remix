@@ -125,9 +125,9 @@ unsafe fn forward_air(fighter: &mut smash::lua2cpp::L2CFighterCommon, boma: &mut
         } 
         //cut speed n drift on-hit
         if AttackModule::is_infliction(boma, *COLLISION_KIND_MASK_HIT) && VarModule::get_int(fighter.battle_object, vars::common::instance::LAST_ATTACK_HITBOX_ID) < 6 {
-            smash::app::lua_bind::KineticEnergy::mul_speed(control_energy, &Vector3f::new(0.75, 1.0, 1.0)); 
-            sv_kinetic_energy!(set_speed, fighter, FIGHTER_KINETIC_ENERGY_ID_GRAVITY, 1.2);
-            sv_kinetic_energy!(controller_set_accel_x_mul, fighter, 0.03);
+            smash::app::lua_bind::KineticEnergy::mul_speed(control_energy, &Vector3f::new(0.708, 1.0, 1.0)); 
+            sv_kinetic_energy!(set_speed, fighter, FIGHTER_KINETIC_ENERGY_ID_GRAVITY, 1.23);
+            sv_kinetic_energy!(controller_set_accel_x_mul, fighter, 0.025);
         }
     }
     //fair cancels on-hit
