@@ -24,13 +24,11 @@ unsafe fn aerial_cancels(fighter: &mut L2CFighterCommon, boma: &mut BattleObject
                 new_status = *FIGHTER_STATUS_KIND_SPECIAL_HI;
             }
         } 
-        if boma.status_frame() >= 15 { //universal 15f
-            fighter.check_airdodge_cancel();
-            if is_input_cancel {fighter.change_status_req(new_status, false); } //special cancel
-            if !fighter.is_motion(Hash40::new("attack_air_lw")) {
-                boma.check_jump_cancel(false);
-                if boma.status_frame() >= 25 {CancelModule::enable_cancel(fighter.module_accessor); } //aerial cancel 25f
-            }
+        fighter.check_airdodge_cancel();
+        if is_input_cancel {fighter.change_status_req(new_status, false); } //special cancel
+        if !fighter.is_motion(Hash40::new("attack_air_lw")) {
+            boma.check_jump_cancel(false);
+            if boma.status_frame() >= 25 {CancelModule::enable_cancel(fighter.module_accessor); } //aerial cancel 25f
         }
     }
 }
@@ -130,7 +128,7 @@ unsafe fn forward_air(fighter: &mut smash::lua2cpp::L2CFighterCommon, boma: &mut
             sv_kinetic_energy!(controller_set_accel_x_mul, fighter, 0.025);
         }
     }
-    //fair cancels on-hit
+    //fair cancel end-lag on-hit
     if VarModule::is_flag(fighter.battle_object, vars::bayonetta::instance::IS_HIT) {
         if boma.is_motion(Hash40::new("attack_air_f3")) {
             if boma.motion_frame() >= 30.0 {CancelModule::enable_cancel(fighter.module_accessor);} //cancels at 25f
