@@ -156,7 +156,6 @@ unsafe fn bayonetta_special_air_s_u_game(fighter: &mut L2CAgentBase) {
     if is_excute(fighter) {
         notify_event_msc_cmd!(fighter, Hash40::new_raw(0x2127e37c07), *GROUND_CLIFF_CHECK_KIND_ALWAYS);
         sv_kinetic_energy!(set_speed_mul, fighter, FIGHTER_KINETIC_ENERGY_ID_MOTION, 0.15);
-        sv_kinetic_energy!(controller_set_accel_x_add, fighter, 0.005);
         KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_FALL);
     }
 }
@@ -403,7 +402,6 @@ unsafe fn bayonetta_special_lw (fighter: &mut L2CAgentBase) {
 #[acmd_script( agent = "bayonetta", script = "game_specialairlw" , category = ACMD_GAME , low_priority)]
 unsafe fn bayonetta_special_air_lw (fighter: &mut L2CAgentBase) {
 	let lua_state = fighter.lua_state_agent;
-	let boma = fighter.boma();
 	frame(lua_state, 1.0);
     FT_MOTION_RATE_RANGE(fighter, 1.0, 8.0, 4.0);
 	if is_excute(fighter) {

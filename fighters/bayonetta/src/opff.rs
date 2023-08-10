@@ -143,8 +143,9 @@ unsafe fn forward_air(fighter: &mut smash::lua2cpp::L2CFighterCommon, boma: &mut
 
 unsafe fn abk(fighter: &mut smash::lua2cpp::L2CFighterCommon, frame: f32) {
     let boma = fighter.boma();
-    let facing = PostureModule::lr(boma);
     if fighter.is_status(*FIGHTER_BAYONETTA_STATUS_KIND_SPECIAL_AIR_S_U) {
+        sv_kinetic_energy!(controller_set_accel_x_add, fighter, 0.005);
+        let facing = PostureModule::lr(boma);
         let anglestick = VarModule::get_float(fighter.battle_object, vars::bayonetta::status::ABK_ANGLE);
         joint_rotator(fighter, frame, Hash40::new("top"), Vector3f{x: -19.5*anglestick, y:90.0*facing, z:0.0}, 10.0, 13.0, 43.0, 43.0);
         if boma.status_frame() <= 7 { VarModule::set_float(fighter.battle_object, vars::bayonetta::status::ABK_ANGLE, boma.left_stick_y());}
