@@ -75,7 +75,7 @@ appeal_lw_l:
 attack_s4_hi:
 attack_air_n:
   extra:
-    cancel_frame: 52
+    cancel_frame: 51
 attack_air_f:
   extra:
     cancel_frame: 32
