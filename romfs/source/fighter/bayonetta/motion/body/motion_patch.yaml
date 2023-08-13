@@ -38,7 +38,7 @@ attack_lw3:
     cancel_frame: 32
 special_hi:
   extra:
-    cancel_frame: 45
+    cancel_frame: 46
 special_lw:
   extra:
     intangible_end_frame: 15
@@ -109,7 +109,7 @@ attack_100_end:
     cancel_frame: 41
 special_air_hi:
   extra:
-    cancel_frame: 45
+    cancel_frame: 46
 special_air_s_u:
   extra:
     cancel_frame: 43
@@ -125,9 +125,6 @@ special_n_loop_f:
 special_n_fire_h:
   flags:
     move: true
-escape_batwithin:
-  extra:
-    cancel_frame: 50
 special_n_fire_f:
   flags:
     move: true
@@ -140,9 +137,6 @@ special_n_start_f:
 special_n_start_h:
   flags:
     move: true
-escape_b_batwithin:
-  extra:
-    cancel_frame: 50
 special_n_charge_h:
   flags:
     move: true
@@ -152,9 +146,6 @@ special_n_charge_f:
 special_s_hold_end:
   extra:
     cancel_frame: 60
-escape_f_batwithin:
-  extra:
-    cancel_frame: 50
 special_air_n_end_f:
   flags:
     move: true
@@ -169,9 +160,6 @@ special_air_n_end_h:
 special_air_n_fire_f:
   flags:
     move: true
-escape_air_batwithin:
-  extra:
-    cancel_frame: 50
 special_air_n_loop_h:
   flags:
     move: true

@@ -18,7 +18,6 @@
     <int hash="attack_air_hi_shoot_landing_frame">3</int>
     <float hash="final_vector_min">40</float>
     <float hash="final_vector_max">45</float>
-    <float hash="bat_escape_air_frame">45</float>
   </struct>
   <struct hash="map_collision_wickedweaveleg">
     <float hash="down">0.0</float>
@@ -53,7 +52,7 @@
       <int hash="ab_u_landing_frame">18</int>
       <int hash="ab_u_landing_frame_2nd">22</int>
       <float hash="ab_d_hit_after_speed_y">2.6</float>
-      <float hash="ab_d_hit_after_max_accel_x">0.045</float>
+      <float hash="ab_d_hit_after_max_accel_x">0.04</float>
       <float hash="ab_d_hit_after_front_max_speed_x">1</float>
       <float hash="ab_d_motion_speed_mul">0.9</float>
       <float hash="ab_u_motion_speed_mul">0.81</float>
@@ -68,7 +67,6 @@
       <int hash="ab_d_change_frame">-1</int>
       <int hash="disable_jump_after_frame">0</int>
       <float hash="guard_speed_mul_x">0.6</float>
-      <float hash="hs_shooting_speed_mul_x">1.1</float>
     </struct>
     <hash40 index="1">dummy</hash40>
     <hash40 index="2">dummy</hash40>
