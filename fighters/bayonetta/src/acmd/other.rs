@@ -558,6 +558,14 @@ unsafe fn up_taunt_game(fighter: &mut L2CAgentBase) {
     FT_MOTION_RATE(fighter, 210/(100-1));
 }
 
+#[acmd_script( agent = "bayonetta", script = "game_appeallwl", category = ACMD_GAME , low_priority)]
+unsafe fn down_left_taunt_game(fighter: &mut L2CAgentBase) {
+    frame(fighter.lua_state_agent, 150.0);
+    if is_excute(fighter) {
+        StatusModule::change_status_request(fighter.module_accessor, *FIGHTER_STATUS_KIND_SQUAT_RV, false);
+    }
+}
+
 #[acmd_script( agent = "bayonetta", scripts = ["sound_appealhir","sound_appealhil"] , category = ACMD_SOUND , low_priority)]
 unsafe fn sound_appealhi  (fighter: &mut L2CAgentBase) {
 	let lua_state = fighter.lua_state_agent;
@@ -670,6 +678,7 @@ pub fn install() {
         escape_b_game,
         side_taunt_game,
         up_taunt_game,
+        down_left_taunt_game,
         sound_appealhi,
         sound_appeallwr,
         sound_appeallwl
