@@ -10,7 +10,7 @@ unsafe fn bayonetta_attack_11_game(fighter: &mut L2CAgentBase) {
     FT_MOTION_RATE_RANGE(fighter, 1.0, 8.0, 3.0);
     if is_excute(fighter) {
         notify_event_msc_cmd!(fighter, Hash40::new_raw(0x2d51fcdb09), *FIGHTER_BAYONETTA_SHOOTING_SLOT_L_ARM, true, true, false, 10, 3, 10, 5, true);
-        sv_kinetic_energy!(set_speed_mul, fighter, FIGHTER_KINETIC_ENERGY_ID_MOTION, 0.8);
+        sv_kinetic_energy!(set_speed_mul, fighter, FIGHTER_KINETIC_ENERGY_ID_MOTION, 0.5);
     }
     frame(lua_state, 8.0);
     FT_MOTION_RATE(fighter, 1.0);
