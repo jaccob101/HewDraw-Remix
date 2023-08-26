@@ -72,13 +72,15 @@ appeal_lw_l:
   - expression_win2b
   - sound_appeallwl
   - effect_win2
-attack_s4_hi:
+attack_lw4:
+  extra:
+    cancel_frame: 64
 attack_air_n:
   extra:
     cancel_frame: 51
 attack_air_f:
   extra:
-    cancel_frame: 32
+    cancel_frame: 31
 attack_s3_s3:
   blend_frames: 5
   extra:
@@ -91,7 +93,7 @@ attack_s3_s2:
 attack_air_f2:
   blend_frames: 2
   extra:
-    cancel_frame: 37
+    cancel_frame: 35
 attack_air_f3:
   blend_frames: 3
   extra:
