@@ -122,20 +122,20 @@ unsafe fn forward_air(fighter: &mut smash::lua2cpp::L2CFighterCommon, boma: &mut
     if boma.is_motion_one_of(&[Hash40::new("attack_air_f"), Hash40::new("attack_air_f2")]) {
         //fair exact input from frame 12
         if boma.get_aerial() == Some(AerialKind::Fair) { 
-            if boma.is_motion(Hash40::new("attack_air_f")) && boma.motion_frame() > 16.0 {
+            if boma.is_motion(Hash40::new("attack_air_f")) && boma.motion_frame() > 15.0 {
                 MotionModule::change_motion(fighter.module_accessor, smash::phx::Hash40::new("attack_air_f2"), 0.0, 1.0, false, 0.0, false, false);
             }
-            if boma.is_motion(Hash40::new("attack_air_f2")) && boma.motion_frame() >= 11.0 {
+            if boma.is_motion(Hash40::new("attack_air_f2")) && boma.motion_frame() >= 10.0 {
                 VarModule::off_flag(fighter.battle_object, vars::bayonetta::instance::IS_HIT);
                 MotionModule::change_motion(fighter.module_accessor, smash::phx::Hash40::new("attack_air_f3"), 0.0, 1.0, false, 0.0, false, false);
             }
         } 
         //cut speed n drift on-hit
         if AttackModule::is_infliction(boma, *COLLISION_KIND_MASK_HIT) && VarModule::get_int(fighter.battle_object, vars::common::instance::LAST_ATTACK_HITBOX_ID) < 6 {
-            smash::app::lua_bind::KineticEnergy::mul_speed(control_energy, &Vector3f::new(0.71, 1.0, 1.0)); 
+            smash::app::lua_bind::KineticEnergy::mul_speed(control_energy, &Vector3f::new(0.77, 1.0, 1.0)); 
             sv_kinetic_energy!(set_speed, fighter, FIGHTER_KINETIC_ENERGY_ID_GRAVITY, 1.3);
-            sv_kinetic_energy!(controller_set_accel_x_mul, fighter, 0.025);
-            sv_kinetic_energy!(set_accel, fighter, FIGHTER_KINETIC_ENERGY_ID_GRAVITY, -0.12);
+            sv_kinetic_energy!(controller_set_accel_x_mul, fighter, 0.03);
+            //sv_kinetic_energy!(set_accel, fighter, FIGHTER_KINETIC_ENERGY_ID_GRAVITY, -0.12);
         }
     }
 }
