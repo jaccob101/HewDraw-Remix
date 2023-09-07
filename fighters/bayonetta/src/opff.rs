@@ -188,7 +188,7 @@ unsafe fn branching_ftilt_jab(fighter: &mut L2CFighterCommon) {
         } else if fighter.is_cat_flag(Cat1::AttackS3 | Cat1::AttackN) {
             MotionModule::change_motion(fighter.module_accessor, smash::phx::Hash40::new("attack_s3_s2"), 0.0, 1.0, false, 0.0, false, false);
         }
-    }
+    } else if fighter.is_motion(Hash40::new("attack_s3_s2")) && fighter.is_flag(*FIGHTER_BAYONETTA_INSTANCE_WORK_ID_FLAG_SHOOTING_DISABLE_ROOT_ATTACK) {AttackModule::clear_all(boma); }
     if fighter.is_status(*FIGHTER_STATUS_KIND_ATTACK) && !fighter.is_cat_flag(Cat1::AttackLw3 | Cat1::AttackHi3 | Cat1::AttackS3 | Cat1::Catch) {
         //hold jab
         if (fighter.is_button_on(Buttons::Attack) && ControlModule::get_trigger_count(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK as u8) > 5) 
