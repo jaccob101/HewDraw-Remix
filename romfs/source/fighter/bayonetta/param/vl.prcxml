@@ -27,6 +27,7 @@
       <int hash="charge_frame_max">150</int>
       <int hash="cancel_frame">18</int>
       <float hash="air_start_speed_mul_x">0.35</float>
+      <int hash="add_fire_max">1</int>
     </struct>
     <hash40 index="1">dummy</hash40>
     <hash40 index="2">dummy</hash40>

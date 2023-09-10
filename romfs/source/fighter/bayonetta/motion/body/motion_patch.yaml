@@ -77,7 +77,7 @@ attack_lw4:
     cancel_frame: 64
 attack_air_n:
   extra:
-    cancel_frame: 51
+    cancel_frame: 52
 attack_air_f:
   extra:
     cancel_frame: 31
@@ -115,74 +115,11 @@ special_air_hi:
 special_air_s_u:
   extra:
     cancel_frame: 43
-special_n_end_f:
-  flags:
-    move: true
-special_n_end_h:
-  flags:
-    move: true
-special_n_loop_f:
-  flags:
-    move: true
-special_n_fire_h:
-  flags:
-    move: true
-special_n_fire_f:
-  flags:
-    move: true
-special_n_loop_h:
-  flags:
-    move: true
-special_n_start_f:
-  flags:
-    move: true
-special_n_start_h:
-  flags:
-    move: true
-special_n_charge_h:
-  flags:
-    move: true
-special_n_charge_f:
-  flags:
-    move: true
 special_s_hold_end:
   extra:
     cancel_frame: 60
-special_air_n_end_f:
-  flags:
-    move: true
 special_air_s_d:
   blend_frames: 2
-special_air_s_d_hit:
-  extra:
-    cancel_frame: 32
-special_air_n_end_h:
-  flags:
-    move: true
-special_air_n_fire_f:
-  flags:
-    move: true
-special_air_n_loop_h:
-  flags:
-    move: true
-special_air_n_loop_f:
-  flags:
-    move: true
-special_air_n_fire_h:
-  flags:
-    move: true
-special_air_n_start_f:
-  flags:
-    move: true
-special_air_n_start_h:
-  flags:
-    move: true
-special_air_n_charge_f:
-  flags:
-    move: true
-special_air_n_charge_h:
-  flags:
-    move: true
 catch_attack:
   extra:
     cancel_frame: 0
