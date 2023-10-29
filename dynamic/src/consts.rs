@@ -850,13 +850,12 @@ pub mod vars {
     }
 
     pub mod reflet {
-        pub mod status {
-            // flags
-            pub const ELWIND1_CANCEL: i32 = 0x1100;
-        }
         pub mod instance {
-            //flags
-            pub const THUNDER_CHARGE: i32 = 0x0100;
+            // flags
+            pub const ELWIND1_CANCEL: i32 = 0x0100;
+
+            // ints
+            pub const THUNDER_CHARGE: i32 = 0x0101;
         }
     }
 

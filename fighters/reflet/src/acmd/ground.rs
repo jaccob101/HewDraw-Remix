@@ -61,9 +61,11 @@ unsafe fn reflet_attack_12_game(fighter: &mut L2CAgentBase) {
         }
     }
     frame(lua_state, 7.0);
-    if WorkModule::get_float(boma, *FIGHTER_REFLET_INSTANCE_WORK_ID_FLOAT_SPECIAL_S_CURRENT_POINT) > 0.1 {
-        if is_excute(fighter) {
+    if is_excute(fighter) {
+        if WorkModule::get_float(boma, *FIGHTER_REFLET_INSTANCE_WORK_ID_FLOAT_SPECIAL_S_CURRENT_POINT) > 0.1 { 
             WorkModule::on_flag(boma, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO);
+        } else {
+            ComboModule::reset(boma);
         }
     }
     frame(lua_state, 9.0);
