@@ -115,9 +115,7 @@ unsafe fn change_status_request_from_script_hook(boma: &mut BattleObjectModuleAc
         }
         else if boma.kind() == *FIGHTER_KIND_REFLET
         && StatusModule::status_kind(boma) == *FIGHTER_STATUS_KIND_SPECIAL_HI
-        && next_status == *FIGHTER_STATUS_KIND_FALL_SPECIAL
-        && !VarModule::is_flag(boma.object(), vars::reflet::instance::ELWIND1_CANCEL) {
-            VarModule::on_flag(boma.object(), vars::reflet::instance::ELWIND1_CANCEL);
+        && next_status == *FIGHTER_STATUS_KIND_FALL_SPECIAL {
             next_status = *FIGHTER_STATUS_KIND_FALL;
         }
         else if boma.kind() == *FIGHTER_KIND_MEWTWO 
