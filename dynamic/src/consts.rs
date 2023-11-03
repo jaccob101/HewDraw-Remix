@@ -305,7 +305,8 @@ pub mod vars {
         pub mod status {
             // flags
             pub const IS_ACTIVATE: i32 = 0x1100;
-            pub const DIRECT_HIT: i32 = 0x1101;
+            // ints
+            pub const SPECIAL_BUFFER: i32 = 0x1101;
             // floats
             pub const ABK_ANGLE: i32 = 0x1102;
         }
