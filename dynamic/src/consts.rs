@@ -300,15 +300,13 @@ pub mod vars {
 
             // ints
             pub const NUM_RECOVERY_RESOURCE_USED: i32 = 0x0100;
-            pub const NUM_CANCEL_THIS_AIRTIME: i32 = 0x0101;
+            pub const FAIR_STATE: i32 = 0x0101;
         }
         pub mod status {
             // flags
             pub const IS_ACTIVATE: i32 = 0x1100;
-            // ints
-            pub const SPECIAL_BUFFER: i32 = 0x1101;
             // floats
-            pub const ABK_ANGLE: i32 = 0x1102;
+            pub const ABK_ANGLE: i32 = 0x1101;
         }
     }
 
@@ -824,12 +822,6 @@ pub mod vars {
     pub mod pikmin {
         pub mod instance {
             pub const SPECIAL_HI_CANCEL_ESCAPE_AIR: i32 = 0x0100;
-        }
-    }
-
-    pub mod ptrainer {
-        pub mod instance {
-            pub const IS_SWITCH_BACKWARDS: i32 = 0x0100;
         }
     }
 
