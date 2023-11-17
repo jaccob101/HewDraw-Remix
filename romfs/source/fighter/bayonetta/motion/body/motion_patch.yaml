@@ -18,17 +18,12 @@ throw_hi:
   extra:
     cancel_frame: 36
 attack_12:
-  blend_frames: 4
   extra:
     cancel_frame: 25
 attack_13:
   extra:
     cancel_frame: 27
-special_s:
-  extra:
-    cancel_frame: 66
 attack_11:
-  blend_frames: 3
   extra:
     cancel_frame: 25
 attack_lw3:
@@ -38,7 +33,7 @@ attack_lw3:
     cancel_frame: 32
 special_hi:
   extra:
-    cancel_frame: 45
+    cancel_frame: 38
 special_lw:
   extra:
     xlu_start: 0
@@ -77,14 +72,17 @@ attack_air_f:
   extra:
     cancel_frame: 31
 attack_s3_s3:
-  blend_frames: 5
+  blend_frames: 1
   extra:
     cancel_frame: 47
 attack_s4_lw:
 attack_s3_s2:
-  blend_frames: 3
+  blend_frames: 1
   extra:
-    cancel_frame: 49
+    cancel_frame: 47
+attack_air_n:
+  extra:
+    cancel_frame: 50
 attack_air_f2:
   blend_frames: 1
   extra:
@@ -106,10 +104,13 @@ attack_100_end:
     cancel_frame: 41
 special_air_hi:
   extra:
-    cancel_frame: 45
+    cancel_frame: 38
 special_air_s_u:
   extra:
-    cancel_frame: 43
+    cancel_frame: 44
+special_s:
+  extra:
+    cancel_frame: 63
 special_s_hold_end:
   extra:
     cancel_frame: 61
