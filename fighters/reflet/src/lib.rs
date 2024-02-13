@@ -53,7 +53,7 @@ fn reflet_init(fighter: &mut L2CFighterCommon) {
         if fighter.global_table[globals::FIGHTER_KIND] != FIGHTER_KIND_REFLET {
         return;
         }
-        WorkModule::set_int(&mut *fighter.module_accessor, 8, *FIGHTER_REFLET_INSTANCE_WORK_ID_INT_THUNDER_SWORD_CURRENT_POINT);
+        VarModule::set_int(fighter.battle_object, vars::toonlink::instance::float_frame, 120);
     }
 }
 

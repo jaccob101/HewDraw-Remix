@@ -38,7 +38,32 @@ use utils::{
 };
 use smashline::*;
 
+#[fighter_reset]
+fn toonlink_reset(fighter: &mut L2CFighterCommon) {
+    unsafe {
+        let fighter_kind = utility::get_kind(&mut *fighter.module_accessor);
+        if fighter_kind != *FIGHTER_KIND_TOONLINK {
+            return;
+        }
+    }
+}
+
+#[fighter_init]
+fn toonlink_init(fighter: &mut L2CFighterCommon) {
+    unsafe {
+        if fighter.global_table[globals::FIGHTER_KIND] != FIGHTER_KIND_TOONLINK {
+        return;
+        }
+        VarModule::set_int(fighter.battle_object, vars::toonlink::instance::float_frame, 120);
+    }
+}
+
 pub fn install(is_runtime: bool) {
+    if is_runtime {
+        utils::singletons::init();
+    }
+    smashline::install_agent_resets!(toonlink_reset);
+    smashline::install_agent_init_callbacks!(toonlink_init);
     acmd::install();
     status::install();
     opff::install(is_runtime);

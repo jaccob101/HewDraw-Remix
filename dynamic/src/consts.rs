@@ -1463,6 +1463,12 @@ pub mod vars {
             pub const RING_SECOND_COLOR: i32 = 0x108;
         }
     }
+    pub mod toonlink {
+        pub mod instance {
+            // ints
+            pub const float_frame: i32 = 0x0100;
+        }
+    }
 }
 
 pub mod statuses {
@@ -1530,5 +1536,9 @@ pub mod statuses {
     pub mod bayonetta {
         pub const SPECIAL_S_KICK: i32 = 0;
         pub const SPECIAL_S_EDGE: i32 = 1;
+    }
+
+    pub mod toonlink {
+        pub const float_start: i32 = 0;
     }
 }

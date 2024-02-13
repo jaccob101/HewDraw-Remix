@@ -33,6 +33,24 @@ unsafe fn triple_jump_lockout(fighter: &mut L2CFighterCommon) {
             WorkModule::enable_transition_term(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_JUMP_AERIAL_BUTTON);
         }
     }
+    if fighter.global_table[SITUATION_KIND] == SITUATION_KIND_GROUND {
+        if StatusModule::is_situation_changed(fighter.module_accessor) {VarModule::set_int(fighter.battle_object, vars::toonlink::instance::float_frame, 120); }
+    } else {
+        if WorkModule::is_enable_transition_term(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_JUMP_AERIAL_BUTTON)
+        && VarModule::get_int(fighter.battle_object, vars::toonlink::instance::float_frame) == 120 
+        && ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP)
+        && fighter.global_table[STICK_Y].get_f32() <= WorkModule::get_param_float(fighter.module_accessor, smash::hash40("common"), smash::hash40("squat_stick_y")) {
+            fighter.change_to_custom_status(statuses::toonlink::float_start, true, false);
+        }
+        if VarModule::get_int(fighter.battle_object, vars::toonlink::instance::float_frame) > 0 && VarModule::get_int(fighter.battle_object, vars::toonlink::instance::float_frame) < 120 {
+            if ControlModule::check_button_off(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) {
+                VarModule::set_int(fighter.battle_object, vars::toonlink::instance::float_frame, 0);
+                if fighter.is_status(*FIGHTER_STATUS_KIND_ATTACK_AIR) {
+                    KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_FALL);
+                }
+            }
+        }
+    }
 }
 
 // symbol-based call for the links' common opff
