@@ -3,6 +3,7 @@ use globals::*;
 // status script import
 
 use smash::app::sv_battle_object::module_accessor;
+mod special_hi;
 
 // Prevents side special from being used if a Din's Fire is present
 unsafe extern "C" fn should_use_special_s_callback(fighter: &mut L2CFighterCommon) -> L2CValue {
@@ -37,8 +38,10 @@ unsafe extern "C" fn should_use_special_s_callback(fighter: &mut L2CFighterCommo
 unsafe extern "C" fn on_start(fighter: &mut L2CFighterCommon) {
      // set the callbacks on fighter init
      fighter.global_table[globals::USE_SPECIAL_S_CALLBACK].assign(&L2CValue::Ptr(should_use_special_s_callback as *const () as _));
+     VarModule::set_int(fighter.battle_object, vars::zelda::instance::EFF_COOLDOWN_HANDLER, -2);
 }
 
 pub fn install(agent: &mut Agent) {
     agent.on_start(on_start);
+    special_hi::install(agent);
 }
