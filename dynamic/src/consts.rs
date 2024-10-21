@@ -1484,7 +1484,7 @@ pub mod vars {
     pub mod samusd {
         pub mod instance {
             // flags
-            pub const SPECIAL_LW_ENABLE_DETONATE: i32 = 0x0100;
+            pub const ATTACK_AIR_LANDING_HIT: i32 = 0x0100;
 
             // ints
             pub const SPECIAL_LW_BOMB_OBJECT_ID: i32 = 0x0100;

@@ -22,15 +22,15 @@ special_s:
   flags:
     move: false
   extra:
-    cancel_frame: 51
+    cancel_frame: 52
 attack_11:
   extra:
-    cancel_frame: 16
+    cancel_frame: 17
 attack_lw3:
   flags:
     move: false
   extra:
-    cancel_frame: 37
+    cancel_frame: 28
 attack_hi4:
   extra:
     cancel_frame: 62
@@ -48,7 +48,7 @@ special_n_c:
     cancel_frame: 9
 attack_dash:
   extra:
-    cancel_frame: 37
+    cancel_frame: 39
 attack_s4_s:
   extra:
     cancel_frame: 54
@@ -70,6 +70,9 @@ attack_air_b:
 attack_air_f:
   extra:
     cancel_frame: 34
+attack_air_hi:
+  extra:
+    cancel_frame: 42
 attack_s4_lw:
   extra:
     cancel_frame: 54
@@ -86,7 +89,7 @@ special_hi:
     xlu_end: 0
 special_air_s:
   extra:
-    cancel_frame: 51
+    cancel_frame: 52
 special_air_lw:
   extra:
     cancel_frame: 47
